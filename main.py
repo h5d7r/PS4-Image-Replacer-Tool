@@ -9,8 +9,8 @@ from PIL import Image, ImageTk
 class PS4AppMetaManager:
     def __init__(self, root):
         self.root = root
-        self.root.title("PS4 AppMeta Manager - By Mr. Velox")
-        self.root.geometry("620x580")
+        self.root.title("PS4 AppMeta Manager")
+        self.root.geometry("620x620")
         self.root.resizable(False, False)
         self.config_file = "config.json"
         self.current_image_path = None
@@ -25,6 +25,9 @@ class PS4AppMetaManager:
         self.load_config()
 
     def setup_ui(self):
+        title_label = ttk.Label(self.main_frame, text="AppMeta Injection Tool", font=('', 16, 'bold'))
+        title_label.pack(pady=(0, 15))
+
         conn_frame = ttk.LabelFrame(self.main_frame, text="Connection Parameters", padding="15")
         conn_frame.pack(fill=tk.X, pady=(0, 10))
         
@@ -58,10 +61,22 @@ class PS4AppMetaManager:
         self.setup_tab(self.tab_ext, "External", 512, 512, self.process_external, "icon0.png")
         self.setup_tab(self.tab_int, "Internal", 1920, 1080, self.process_internal, "pic0.png & pic1.png")
         
+        bottom_frame = ttk.Frame(self.root)
+        bottom_frame.pack(side=tk.BOTTOM, fill=tk.X)
+
+        credits_frame = ttk.Frame(bottom_frame)
+        credits_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        dev_label = ttk.Label(credits_frame, text="Developed by: Mr. Velox", font=('', 9, 'bold'))
+        dev_label.pack(side=tk.LEFT)
+        
+        tg_label = ttk.Label(credits_frame, text="Telegram: @C2_9H", font=('', 9, 'bold'), foreground="#0088cc")
+        tg_label.pack(side=tk.RIGHT)
+
         self.status_var = tk.StringVar()
         self.status_var.set("System Ready")
-        status_bar = ttk.Label(self.root, textvariable=self.status_var, relief=tk.SUNKEN, anchor=tk.W, padding=2)
-        status_bar.pack(side=tk.BOTTOM, fill=tk.X)
+        status_bar = ttk.Label(bottom_frame, textvariable=self.status_var, relief=tk.SUNKEN, anchor=tk.W, padding=4)
+        status_bar.pack(fill=tk.X)
 
     def setup_tab(self, parent, mode, w, h, command, target_files):
         container = ttk.Frame(parent, padding="15")
